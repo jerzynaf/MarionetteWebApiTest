@@ -18,7 +18,7 @@ namespace WebApiTest.Models
         public WebApiTestContext()
             : base("name=WebApiTestContext")
         {
-            Database.SetInitializer<WebApiTestContext>(new DropCreateDatabaseIfModelChanges<WebApiTestContext>());
+            Database.SetInitializer<WebApiTestContext>(new DropCreateDatabaseAlways<WebApiTestContext>());
         }
 
         public System.Data.Entity.DbSet<WebApiTest.Models.Contact> Contacts { get; set; }
