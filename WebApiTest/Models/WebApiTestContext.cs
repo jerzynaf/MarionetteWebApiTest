@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 
 namespace WebApiTest.Models
 {
@@ -18,10 +14,9 @@ namespace WebApiTest.Models
         public WebApiTestContext()
             : base("name=WebApiTestContext")
         {
-            Database.SetInitializer<WebApiTestContext>(new DropCreateDatabaseAlways<WebApiTestContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<WebApiTestContext>());
         }
 
-        public System.Data.Entity.DbSet<WebApiTest.Models.Contact> Contacts { get; set; }
-
+        public DbSet<Contact> Contacts { get; set; }
     }
 }

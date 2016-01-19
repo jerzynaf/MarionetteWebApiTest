@@ -1,6 +1,6 @@
-ContactManager.module("ContactsApp.Show", function(Show, ContactManager, Backbone, Marionette, $, _){
+ContactManager.module("ContactsApp.Show", function(Show, ContactManager, Backbone, Marionette, $, _) {
   Show.Controller = {
-    showContact: function(id){
+    showContact: function(id) {
       var loadingView = new ContactManager.Common.Views.Loading({
         title: "Artificial Loading Delay",
         message: "Data loading is delayed to demonstrate using a loading view."
@@ -8,23 +8,22 @@ ContactManager.module("ContactsApp.Show", function(Show, ContactManager, Backbon
       ContactManager.regions.main.show(loadingView);
 
       var fetchingContact = ContactManager.request("contact:entity", id);
-      $.when(fetchingContact).done(function(contact){
+      $.when(fetchingContact).done(function(contact) {
         var contactView;
-        if(contact !== undefined){
+        if (contact !== undefined) {
           contactView = new Show.Contact({
             model: contact
           });
 
-          contactView.on("contact:edit", function(contact){
+          contactView.on("contact:edit", function(contact) {
             ContactManager.trigger("contact:edit", contact.get("id"));
           });
-        }
-        else{
+        } else {
           contactView = new Show.MissingContact();
         }
 
         ContactManager.regions.main.show(contactView);
       });
     }
-  }
+  };
 });

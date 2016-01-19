@@ -1,4 +1,4 @@
-ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbone, Marionette, $, _){
+ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbone, Marionette, $, _) {
   List.Layout = Marionette.LayoutView.extend({
     template: "#contact-list-layout",
 
@@ -23,13 +23,13 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
       criterion: "input.js-filter-criterion"
     },
 
-    filterContacts: function(e){
+    filterContacts: function(e) {
       e.preventDefault();
       var criterion = this.$(".js-filter-criterion").val();
       this.trigger("contacts:filter", criterion);
     },
 
-    onSetFilterCriterion: function(criterion){
+    onSetFilterCriterion: function(criterion) {
       this.ui.criterion.val(criterion);
     }
   });
@@ -48,22 +48,22 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
       "click": "highlightName"
     },
 
-    flash: function(cssClass){
+    flash: function(cssClass) {
       var $view = this.$el;
-      $view.hide().toggleClass(cssClass).fadeIn(3000, function(){
-        setTimeout(function(){
-          $view.toggleClass(cssClass)
+      $view.hide().toggleClass(cssClass).fadeIn(3000, function() {
+        setTimeout(function() {
+          $view.toggleClass(cssClass);
         }, 5000);
       });
     },
 
-    highlightName: function(e){
+    highlightName: function(e) {
       this.$el.toggleClass("warning");
     },
 
-    remove: function(){
+    remove: function() {
       var self = this;
-      this.$el.fadeOut(function(){
+      this.$el.fadeOut(function() {
         Marionette.ItemView.prototype.remove.call(self);
       });
     }
@@ -83,18 +83,18 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
     childView: List.Contact,
     childViewContainer: "tbody",
 
-    initialize: function(){
-      this.listenTo(this.collection, "reset", function(){
-        this.attachHtml = function(collectionView, childView, index){
+    initialize: function() {
+      this.listenTo(this.collection, "reset", function() {
+        this.attachHtml = function(collectionView, childView, index) {
           collectionView.$el.append(childView.el);
-        }
+        };
       });
     },
 
-    onRenderCollection: function(){
-      this.attachHtml = function(collectionView, childView, index){
+    onRenderCollection: function() {
+      this.attachHtml = function(collectionView, childView, index) {
         collectionView.$el.prepend(childView.el);
-      }
+      };
     }
   });
 });

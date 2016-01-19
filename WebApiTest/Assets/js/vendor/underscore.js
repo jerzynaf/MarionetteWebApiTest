@@ -22,27 +22,27 @@
 
   // Create quick reference variables for speed access to core prototypes.
   var
-    push             = ArrayProto.push,
-    slice            = ArrayProto.slice,
-    concat           = ArrayProto.concat,
-    toString         = ObjProto.toString,
-    hasOwnProperty   = ObjProto.hasOwnProperty;
+    push = ArrayProto.push,
+    slice = ArrayProto.slice,
+    concat = ArrayProto.concat,
+    toString = ObjProto.toString,
+    hasOwnProperty = ObjProto.hasOwnProperty;
 
   // All **ECMAScript 5** native function implementations that we hope to use
   // are declared here.
   var
-    nativeForEach      = ArrayProto.forEach,
-    nativeMap          = ArrayProto.map,
-    nativeReduce       = ArrayProto.reduce,
-    nativeReduceRight  = ArrayProto.reduceRight,
-    nativeFilter       = ArrayProto.filter,
-    nativeEvery        = ArrayProto.every,
-    nativeSome         = ArrayProto.some,
-    nativeIndexOf      = ArrayProto.indexOf,
-    nativeLastIndexOf  = ArrayProto.lastIndexOf,
-    nativeIsArray      = Array.isArray,
-    nativeKeys         = Object.keys,
-    nativeBind         = FuncProto.bind;
+    nativeForEach = ArrayProto.forEach,
+    nativeMap = ArrayProto.map,
+    nativeReduce = ArrayProto.reduce,
+    nativeReduceRight = ArrayProto.reduceRight,
+    nativeFilter = ArrayProto.filter,
+    nativeEvery = ArrayProto.every,
+    nativeSome = ArrayProto.some,
+    nativeIndexOf = ArrayProto.indexOf,
+    nativeLastIndexOf = ArrayProto.lastIndexOf,
+    nativeIsArray = Array.isArray,
+    nativeKeys = Object.keys,
+    nativeBind = FuncProto.bind;
 
   // Create a safe reference to the Underscore object for use below.
   var _ = function(obj) {
@@ -55,8 +55,8 @@
   // backwards-compatibility for the old `require()` API. If we're in
   // the browser, add `_` as a global object via a string identifier,
   // for Closure Compiler "advanced" mode.
-  if (typeof exports !== 'undefined') {
-    if (typeof module !== 'undefined' && module.exports) {
+  if (typeof exports !== "undefined") {
+    if (typeof module !== "undefined" && module.exports) {
       exports = module.exports = _;
     }
     exports._ = _;
@@ -65,7 +65,7 @@
   }
 
   // Current version.
-  _.VERSION = '1.6.0';
+  _.VERSION = "1.6.0";
 
   // Collection Functions
   // --------------------
@@ -102,7 +102,7 @@
     return results;
   };
 
-  var reduceError = 'Reduce of empty array with no initial value';
+  var reduceError = "Reduce of empty array with no initial value";
 
   // **Reduce** builds up a single result from a list of values, aka `inject`,
   // or `foldl`. Delegates to **ECMAScript 5**'s native `reduce` if available.
@@ -331,7 +331,7 @@
         if (a < b || b === void 0) return -1;
       }
       return left.index - right.index;
-    }), 'value');
+    }), "value");
   };
 
   // An internal function used for aggregate "group by" operations.
@@ -512,16 +512,16 @@
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
     var rest = concat.apply(ArrayProto, slice.call(arguments, 1));
-    return _.filter(array, function(value){ return !_.contains(rest, value); });
+    return _.filter(array, function(value) { return !_.contains(rest, value); });
   };
 
   // Zip together multiple lists into a single array -- elements that share
   // an index go together.
   _.zip = function() {
-    var length = _.max(_.pluck(arguments, 'length').concat(0));
+    var length = _.max(_.pluck(arguments, "length").concat(0));
     var results = new Array(length);
     for (var i = 0; i < length; i++) {
-      results[i] = _.pluck(arguments, '' + i);
+      results[i] = _.pluck(arguments, "" + i);
     }
     return results;
   };
@@ -552,7 +552,7 @@
     if (array == null) return -1;
     var i = 0, length = array.length;
     if (isSorted) {
-      if (typeof isSorted == 'number') {
+      if (typeof isSorted == "number") {
         i = (isSorted < 0 ? Math.max(0, length + isSorted) : isSorted);
       } else {
         i = _.sortedIndex(array, item);
@@ -590,7 +590,7 @@
     var idx = 0;
     var range = new Array(length);
 
-    while(idx < length) {
+    while (idx < length) {
       range[idx++] = start;
       start += step;
     }
@@ -602,7 +602,7 @@
   // ------------------
 
   // Reusable constructor function for prototype setting.
-  var ctor = function(){};
+  var ctor = function() {};
 
   // Create a function bound to a given object (assigning `this`, and arguments,
   // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
@@ -644,7 +644,7 @@
   // defined on an object belong to it.
   _.bindAll = function(obj) {
     var funcs = slice.call(arguments, 1);
-    if (funcs.length === 0) throw new Error('bindAll must be passed function names');
+    if (funcs.length === 0) throw new Error("bindAll must be passed function names");
     each(funcs, function(f) { obj[f] = _.bind(obj[f], obj); });
     return obj;
   };
@@ -663,7 +663,7 @@
   // it with the arguments supplied.
   _.delay = function(func, wait) {
     var args = slice.call(arguments, 2);
-    return setTimeout(function(){ return func.apply(null, args); }, wait);
+    return setTimeout(function() { return func.apply(null, args); }, wait);
   };
 
   // Defers a function, scheduling it to run after the current call stack has
@@ -863,7 +863,7 @@
     return copy;
   };
 
-   // Return a copy of the object without the blacklisted properties.
+  // Return a copy of the object without the blacklisted properties.
   _.omit = function(obj) {
     var copy = {};
     var keys = concat.apply(ArrayProto, slice.call(arguments, 1));
@@ -914,28 +914,28 @@
     if (className != toString.call(b)) return false;
     switch (className) {
       // Strings, numbers, dates, and booleans are compared by value.
-      case '[object String]':
-        // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
-        // equivalent to `new String("5")`.
-        return a == String(b);
-      case '[object Number]':
-        // `NaN`s are equivalent, but non-reflexive. An `egal` comparison is performed for
-        // other numeric values.
-        return a != +a ? b != +b : (a == 0 ? 1 / a == 1 / b : a == +b);
-      case '[object Date]':
-      case '[object Boolean]':
-        // Coerce dates and booleans to numeric primitive values. Dates are compared by their
-        // millisecond representations. Note that invalid dates with millisecond representations
-        // of `NaN` are not equivalent.
-        return +a == +b;
-      // RegExps are compared by their source patterns and flags.
-      case '[object RegExp]':
-        return a.source == b.source &&
-               a.global == b.global &&
-               a.multiline == b.multiline &&
-               a.ignoreCase == b.ignoreCase;
+    case "[object String]":
+      // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
+      // equivalent to `new String("5")`.
+      return a == String(b);
+    case "[object Number]":
+      // `NaN`s are equivalent, but non-reflexive. An `egal` comparison is performed for
+      // other numeric values.
+      return a != +a ? b != +b : (a == 0 ? 1 / a == 1 / b : a == +b);
+    case "[object Date]":
+    case "[object Boolean]":
+      // Coerce dates and booleans to numeric primitive values. Dates are compared by their
+      // millisecond representations. Note that invalid dates with millisecond representations
+      // of `NaN` are not equivalent.
+      return +a == +b;
+    // RegExps are compared by their source patterns and flags.
+    case "[object RegExp]":
+      return a.source == b.source &&
+        a.global == b.global &&
+        a.multiline == b.multiline &&
+        a.ignoreCase == b.ignoreCase;
     }
-    if (typeof a != 'object' || typeof b != 'object') return false;
+    if (typeof a != "object" || typeof b != "object") return false;
     // Assume equality for cyclic structures. The algorithm for detecting cyclic
     // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
     var length = aStack.length;
@@ -948,8 +948,8 @@
     // from different frames are.
     var aCtor = a.constructor, bCtor = b.constructor;
     if (aCtor !== bCtor && !(_.isFunction(aCtor) && (aCtor instanceof aCtor) &&
-                             _.isFunction(bCtor) && (bCtor instanceof bCtor))
-                        && ('constructor' in a && 'constructor' in b)) {
+        _.isFunction(bCtor) && (bCtor instanceof bCtor))
+      && ("constructor" in a && "constructor" in b)) {
       return false;
     }
     // Add the first object to the stack of traversed objects.
@@ -957,7 +957,7 @@
     bStack.push(b);
     var size = 0, result = true;
     // Recursively compare objects and arrays.
-    if (className == '[object Array]') {
+    if (className == "[object Array]") {
       // Compare array lengths to determine if a deep comparison is necessary.
       size = a.length;
       result = size == b.length;
@@ -1013,7 +1013,7 @@
   // Is a given value an array?
   // Delegates to ECMA5's native Array.isArray
   _.isArray = nativeIsArray || function(obj) {
-    return toString.call(obj) == '[object Array]';
+    return toString.call(obj) == "[object Array]";
   };
 
   // Is a given variable an object?
@@ -1022,9 +1022,9 @@
   };
 
   // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
-  each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'], function(name) {
-    _['is' + name] = function(obj) {
-      return toString.call(obj) == '[object ' + name + ']';
+  each(["Arguments", "Function", "String", "Number", "Date", "RegExp"], function(name) {
+    _["is" + name] = function(obj) {
+      return toString.call(obj) == "[object " + name + "]";
     };
   });
 
@@ -1032,14 +1032,14 @@
   // there isn't any inspectable "Arguments" type.
   if (!_.isArguments(arguments)) {
     _.isArguments = function(obj) {
-      return !!(obj && _.has(obj, 'callee'));
+      return !!(obj && _.has(obj, "callee"));
     };
   }
 
   // Optimize `isFunction` if appropriate.
-  if (typeof (/./) !== 'function') {
+  if (typeof (/./) !== "function") {
     _.isFunction = function(obj) {
-      return typeof obj === 'function';
+      return typeof obj === "function";
     };
   }
 
@@ -1055,7 +1055,7 @@
 
   // Is a given value a boolean?
   _.isBoolean = function(obj) {
-    return obj === true || obj === false || toString.call(obj) == '[object Boolean]';
+    return obj === true || obj === false || toString.call(obj) == "[object Boolean]";
   };
 
   // Is a given value equal to null?
@@ -1090,7 +1090,7 @@
   };
 
   _.constant = function(value) {
-    return function () {
+    return function() {
       return value;
     };
   };
@@ -1110,7 +1110,7 @@
           return false;
       }
       return true;
-    }
+    };
   };
 
   // Run a function **n** times.
@@ -1135,26 +1135,26 @@
   // List of HTML entities for escaping.
   var entityMap = {
     escape: {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#x27;'
+      '&': "&amp;",
+      '<': "&lt;",
+      '>': "&gt;",
+      '"': "&quot;",
+      "'": "&#x27;"
     }
   };
   entityMap.unescape = _.invert(entityMap.escape);
 
   // Regexes containing the keys and values listed immediately above.
   var entityRegexes = {
-    escape:   new RegExp('[' + _.keys(entityMap.escape).join('') + ']', 'g'),
-    unescape: new RegExp('(' + _.keys(entityMap.unescape).join('|') + ')', 'g')
+    escape: new RegExp("[" + _.keys(entityMap.escape).join("") + "]", "g"),
+    unescape: new RegExp("(" + _.keys(entityMap.unescape).join("|") + ")", "g")
   };
 
   // Functions for escaping and unescaping strings to/from HTML interpolation.
-  _.each(['escape', 'unescape'], function(method) {
+  _.each(["escape", "unescape"], function(method) {
     _[method] = function(string) {
-      if (string == null) return '';
-      return ('' + string).replace(entityRegexes[method], function(match) {
+      if (string == null) return "";
+      return ("" + string).replace(entityRegexes[method], function(match) {
         return entityMap[method][match];
       });
     };
@@ -1184,16 +1184,16 @@
   // Useful for temporary DOM ids.
   var idCounter = 0;
   _.uniqueId = function(prefix) {
-    var id = ++idCounter + '';
+    var id = ++idCounter + "";
     return prefix ? prefix + id : id;
   };
 
   // By default, Underscore uses ERB-style template delimiters, change the
   // following template settings to use alternative delimiters.
   _.templateSettings = {
-    evaluate    : /<%([\s\S]+?)%>/g,
-    interpolate : /<%=([\s\S]+?)%>/g,
-    escape      : /<%-([\s\S]+?)%>/g
+    evaluate: /<%([\s\S]+?)%>/g,
+    interpolate: /<%=([\s\S]+?)%>/g,
+    escape: /<%-([\s\S]+?)%>/g
   };
 
   // When customizing `templateSettings`, if you don't want to define an
@@ -1204,13 +1204,13 @@
   // Certain characters need to be escaped so that they can be put into a
   // string literal.
   var escapes = {
-    "'":      "'",
-    '\\':     '\\',
-    '\r':     'r',
-    '\n':     'n',
-    '\t':     't',
-    '\u2028': 'u2028',
-    '\u2029': 'u2029'
+    "'": "'",
+    '\\': "\\",
+    '\r': "r",
+    '\n': "n",
+    '\t': "t",
+    '\u2028': "u2028",
+    '\u2029': "u2029"
   };
 
   var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g;
@@ -1227,14 +1227,14 @@
       (settings.escape || noMatch).source,
       (settings.interpolate || noMatch).source,
       (settings.evaluate || noMatch).source
-    ].join('|') + '|$', 'g');
+    ].join("|") + "|$", "g");
 
     // Compile the template source, escaping string literals appropriately.
     var index = 0;
     var source = "__p+='";
     text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
       source += text.slice(index, offset)
-        .replace(escaper, function(match) { return '\\' + escapes[match]; });
+        .replace(escaper, function(match) { return "\\" + escapes[match]; });
 
       if (escape) {
         source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
@@ -1251,14 +1251,14 @@
     source += "';\n";
 
     // If a variable is not specified, place data values in local scope.
-    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
+    if (!settings.variable) source = "with(obj||{}){\n" + source + "}\n";
 
     source = "var __t,__p='',__j=Array.prototype.join," +
       "print=function(){__p+=__j.call(arguments,'');};\n" +
       source + "return __p;\n";
 
     try {
-      render = new Function(settings.variable || 'obj', '_', source);
+      render = new Function(settings.variable || "obj", "_", source);
     } catch (e) {
       e.source = source;
       throw e;
@@ -1270,7 +1270,7 @@
     };
 
     // Provide the compiled function source as a convenience for precompilation.
-    template.source = 'function(' + (settings.variable || 'obj') + '){\n' + source + '}';
+    template.source = "function(" + (settings.variable || "obj") + "){\n" + source + "}";
 
     return template;
   };
@@ -1295,18 +1295,18 @@
   _.mixin(_);
 
   // Add all mutator Array functions to the wrapper.
-  each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
+  each(["pop", "push", "reverse", "shift", "sort", "splice", "unshift"], function(name) {
     var method = ArrayProto[name];
     _.prototype[name] = function() {
       var obj = this._wrapped;
       method.apply(obj, arguments);
-      if ((name == 'shift' || name == 'splice') && obj.length === 0) delete obj[0];
+      if ((name == "shift" || name == "splice") && obj.length === 0) delete obj[0];
       return result.call(this, obj);
     };
   });
 
   // Add all accessor Array functions to the wrapper.
-  each(['concat', 'join', 'slice'], function(name) {
+  each(["concat", "join", "slice"], function(name) {
     var method = ArrayProto[name];
     _.prototype[name] = function() {
       return result.call(this, method.apply(this._wrapped, arguments));
@@ -1335,10 +1335,9 @@
   // popular enough to be bundled in a third party lib, but not be part of
   // an AMD load request. Those cases could generate an error when an
   // anonymous define() is called outside of a loader request.
-  if (typeof define === 'function' && define.amd) {
-    define('underscore', [], function() {
+  if (typeof define === "function" && define.amd) {
+    define("underscore", [], function() {
       return _;
     });
   }
 }).call(this);
-

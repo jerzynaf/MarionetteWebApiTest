@@ -1,4 +1,4 @@
-ContactManager.module("Entities", function(Entities, ContactManager, Backbone, Marionette, $, _){
+ContactManager.module("Entities", function(Entities, ContactManager, Backbone, Marionette, $, _) {
   Entities.Contact = Backbone.Model.extend({
     urlRoot: "http://localhost:1063/api/Contacts",
 
@@ -9,19 +9,18 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
     },
 
     validate: function(attrs, options) {
-      var errors = {}
+      var errors = {};
       if (! attrs.firstName) {
         errors.firstName = "can't be blank";
       }
       if (! attrs.lastName) {
         errors.lastName = "can't be blank";
-      }
-      else{
+      } else {
         if (attrs.lastName.length < 2) {
           errors.lastName = "is too short";
         }
       }
-      if( ! _.isEmpty(errors)){
+      if (! _.isEmpty(errors)) {
         return errors;
       }
     }
@@ -37,30 +36,30 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
 
   //Entities.configureStorage("ContactManager.Entities.ContactCollection");
 
-  var initializeContacts = function(){
+  var initializeContacts = function() {
     var contacts = new Entities.ContactCollection([
       { id: 1, firstName: "Alice", lastName: "Arten", phoneNumber: "555-0184" },
       { id: 2, firstName: "Bob", lastName: "Brigham", phoneNumber: "555-0163" },
       { id: 3, firstName: "Charlie", lastName: "Campbell", phoneNumber: "555-0129" }
     ]);
-    contacts.forEach(function(contact){
+    contacts.forEach(function(contact) {
       contact.save();
     });
     return contacts.models;
   };
 
   var API = {
-    getContactEntities: function(){
+    getContactEntities: function() {
       var contacts = new Entities.ContactCollection();
       var defer = $.Deferred();
       contacts.fetch({
-        success: function(data){
+        success: function(data) {
           defer.resolve(data);
         }
       });
       var promise = defer.promise();
-      $.when(promise).done(function(fetchedContacts){
-        if(fetchedContacts.length === 0){
+      $.when(promise).done(function(fetchedContacts) {
+        if (fetchedContacts.length === 0) {
           // if we don't have any contacts yet, create some for convenience
           var models = initializeContacts();
           contacts.reset(models);
@@ -69,15 +68,15 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
       return promise;
     },
 
-    getContactEntity: function(contactId){
-      var contact = new Entities.Contact({id: contactId});
+    getContactEntity: function(contactId) {
+      var contact = new Entities.Contact({ id: contactId });
       var defer = $.Deferred();
-      setTimeout(function(){
+      setTimeout(function() {
         contact.fetch({
-          success: function(data){
+          success: function(data) {
             defer.resolve(data);
           },
-          error: function(data){
+          error: function(data) {
             defer.resolve(undefined);
           }
         });
@@ -86,11 +85,11 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
     }
   };
 
-  ContactManager.reqres.setHandler("contact:entities", function(){
+  ContactManager.reqres.setHandler("contact:entities", function() {
     return API.getContactEntities();
   });
 
-  ContactManager.reqres.setHandler("contact:entity", function(id){
+  ContactManager.reqres.setHandler("contact:entity", function(id) {
     return API.getContactEntity(id);
   });
 });

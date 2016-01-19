@@ -1,4 +1,4 @@
-ContactManager.module("HeaderApp.List", function(List, ContactManager, Backbone, Marionette, $, _){
+ContactManager.module("HeaderApp.List", function(List, ContactManager, Backbone, Marionette, $, _) {
   List.Header = Marionette.ItemView.extend({
     template: "#header-link",
     tagName: "li",
@@ -7,13 +7,13 @@ ContactManager.module("HeaderApp.List", function(List, ContactManager, Backbone,
       "click a": "navigate"
     },
 
-    navigate: function(e){
+    navigate: function(e) {
       e.preventDefault();
       this.trigger("navigate", this.model);
     },
 
-    onRender: function(){
-      if(this.model.selected){
+    onRender: function() {
+      if (this.model.selected) {
         // add class so Bootstrap will highlight the active entry in the navbar
         this.$el.addClass("active");
       }
@@ -30,7 +30,7 @@ ContactManager.module("HeaderApp.List", function(List, ContactManager, Backbone,
       "click a.brand": "brandClicked"
     },
 
-    brandClicked: function(e){
+    brandClicked: function(e) {
       e.preventDefault();
       this.trigger("brand:clicked");
     }

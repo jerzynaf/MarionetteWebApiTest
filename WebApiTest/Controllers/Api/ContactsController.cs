@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApiTest.Models;
@@ -14,7 +10,7 @@ namespace WebApiTest.Controllers.Api
 {
     public class ContactsController : ApiController
     {
-        private WebApiTestContext db = new WebApiTestContext();
+        private readonly WebApiTestContext db = new WebApiTestContext();
 
         // GET: api/Contacts
         public IQueryable<Contact> GetContacts()
@@ -23,10 +19,10 @@ namespace WebApiTest.Controllers.Api
         }
 
         // GET: api/Contacts/5
-        [ResponseType(typeof(Contact))]
+        [ResponseType(typeof (Contact))]
         public IHttpActionResult GetContact(int id)
         {
-            Contact contact = db.Contacts.Find(id);
+            var contact = db.Contacts.Find(id);
             if (contact == null)
             {
                 return NotFound();
@@ -36,7 +32,7 @@ namespace WebApiTest.Controllers.Api
         }
 
         // PUT: api/Contacts/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public IHttpActionResult PutContact(int id, Contact contact)
         {
             if (!ModelState.IsValid)
@@ -61,17 +57,14 @@ namespace WebApiTest.Controllers.Api
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Contacts
-        [ResponseType(typeof(Contact))]
+        [ResponseType(typeof (Contact))]
         public IHttpActionResult PostContact(Contact contact)
         {
             if (!ModelState.IsValid)
@@ -82,14 +75,14 @@ namespace WebApiTest.Controllers.Api
             db.Contacts.Add(contact);
             db.SaveChanges();
 
-            return Ok( contact);
+            return Ok(contact);
         }
 
         // DELETE: api/Contacts/5
-        [ResponseType(typeof(Contact))]
+        [ResponseType(typeof (Contact))]
         public IHttpActionResult DeleteContact(int id)
         {
-            Contact contact = db.Contacts.Find(id);
+            var contact = db.Contacts.Find(id);
             if (contact == null)
             {
                 return NotFound();

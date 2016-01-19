@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using WebApiTest.Models;
 
@@ -12,7 +8,7 @@ namespace WebApiTest.Controllers
 {
     public class ContactsController : Controller
     {
-        private WebApiTestContext db = new WebApiTestContext();
+        private readonly WebApiTestContext db = new WebApiTestContext();
 
         // GET: Contacts
         public ActionResult Index()
@@ -27,7 +23,7 @@ namespace WebApiTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact contact = db.Contacts.Find(id);
+            var contact = db.Contacts.Find(id);
             if (contact == null)
             {
                 return HttpNotFound();
@@ -65,7 +61,7 @@ namespace WebApiTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact contact = db.Contacts.Find(id);
+            var contact = db.Contacts.Find(id);
             if (contact == null)
             {
                 return HttpNotFound();
@@ -96,7 +92,7 @@ namespace WebApiTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact contact = db.Contacts.Find(id);
+            var contact = db.Contacts.Find(id);
             if (contact == null)
             {
                 return HttpNotFound();
@@ -109,7 +105,7 @@ namespace WebApiTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Contact contact = db.Contacts.Find(id);
+            var contact = db.Contacts.Find(id);
             db.Contacts.Remove(contact);
             db.SaveChanges();
             return RedirectToAction("Index");
